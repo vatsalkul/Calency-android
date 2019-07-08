@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Calcency</string>
+    <string name="linktoGithub">
+        <a href = "https://github.com/vatsalkul">Developed By: Vatsal Kulshreshtha</a>
+    </string>
+</resources>
