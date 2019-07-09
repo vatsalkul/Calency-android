@@ -200,9 +200,9 @@ public class MainActivity extends AppCompatActivity {
                     val2 = Double.NaN;
                     display.setText(null);
                     result.setText(null);
-                    usd.setText(null);
-                    euro.setText(null);
-                    pound.setText(null);
+                    usd.setText("USD");
+                    euro.setText("EUR");
+                    pound.setText("GBP");
                 }
             }
         });
@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
             double inrtousd, inrtousdres;
             inrtousd = Double.parseDouble(resultCurr);
             inrtousdres = inputvalue * inrtousd;
-            usd.setText(""+ String.format("%.2f", inrtousdres)+" $");
+            usd.setText(""+ String.format("%.3f", inrtousdres)+" $");
 
         }
 
@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
             double inrtousd, inrtousdres;
             inrtousd = Double.parseDouble(resultEUR);
             inrtousdres = inputvalue * inrtousd;
-            euro.setText(""+ String.format("%.2f", inrtousdres)+ " €");
+            euro.setText(""+ String.format("%.3f", inrtousdres)+ " €");
 
         }
 
@@ -392,7 +392,7 @@ public class MainActivity extends AppCompatActivity {
             double inrtousd, inrtousdres;
             inrtousd = Double.parseDouble(resultGBP);
             inrtousdres = inputvalue * inrtousd;
-            pound.setText(""+ String.format("%.2f", inrtousdres)+ " £");
+            pound.setText(""+ String.format("%.3f", inrtousdres)+ " £");
 
         }
 
