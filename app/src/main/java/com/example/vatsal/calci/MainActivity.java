@@ -56,9 +56,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView euro;
     private TextView pound;
     private double inputvalue;
-    private String resultCurr;
+    private String resultUSD;
     private String resultEUR;
     private String resultGBP;
+    private String[] myLinks = {"https://free.currconv.com/api/v7/convert?q=INR_USD&compact=ultra&apiKey=your-api-key", "https://free.currconv.com/api/v7/convert?q=INR_EUR&compact=ultra&apiKey=your-api-key", "https://free.currconv.com/api/v7/convert?q=INR_GBP&compact=ultra&apiKey=your-api-key"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,8 +220,6 @@ public class MainActivity extends AppCompatActivity {
                     inputvalue = Double.parseDouble(TextValue);
 
                     new calculate().execute();
-                    new calculateEUR().execute();
-                    new calculatePound().execute();
                 }
             }
         });
@@ -285,10 +284,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String strings) {
-            double inrtousd, inrtousdres;
-            inrtousd = Double.parseDouble(resultCurr);
+            double inrtousd, inrtousdres, inrtoeur, inrtoeurres, inrtogbp, inrtogbpres;
+            inrtousd = Double.parseDouble(resultUSD);
+            inrtoeur = Double.parseDouble(resultEUR);
+            inrtogbp = Double.parseDouble(resultGBP);
             inrtousdres = inputvalue * inrtousd;
-            usd.setText(""+ String.format("%.3f", inrtousdres)+" $");
+            inrtoeurres = inputvalue * inrtoeur;
+            inrtogbpres = inputvalue * inrtogbp;
+            usd.setText(""+ String.format("%.2f", inrtousdres)+" $");
+            euro.setText(""+ String.format("%.2f", inrtoeurres)+ " €");
+            pound.setText(""+ String.format("%.2f", inrtogbpres)+ " £");
+
 
         }
 
@@ -296,19 +302,29 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             String uRl;
             try {
-                uRl = getJson("https://free.currconv.com/api/v7/convert?q=INR_USD&compact=ultra&apiKey=your-api-key");
-                JSONObject INRtoObj;
-                INRtoObj = new JSONObject(uRl);
-                resultCurr = INRtoObj.getString("INR_USD");
+                for(int i=0; i<3; i++){
+                    uRl = getJson(myLinks[i]);
+                    JSONObject INRtoObj;
+                    INRtoObj = new JSONObject(uRl);
+                    if(myLinks[i]==myLinks[0]){
+                        resultUSD = INRtoObj.getString("INR_USD");
+                    }
+                    else if(myLinks[i]==myLinks[1]){
+                        resultEUR = INRtoObj.getString("INR_EUR");
+                    }
+                    else if(myLinks[i]==myLinks[2]){
+                        resultGBP = INRtoObj.getString("INR_GBP");
+                    }
+
+                }
+
 
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        return resultCurr;
-
-
+        return null;
 
         }
 
@@ -329,107 +345,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class calculateEUR extends AsyncTask<String, String, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
 
-        @Override
-        protected void onPostExecute(String strings) {
-            double inrtousd, inrtousdres;
-            inrtousd = Double.parseDouble(resultEUR);
-            inrtousdres = inputvalue * inrtousd;
-            euro.setText(""+ String.format("%.3f", inrtousdres)+ " €");
-
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            String uRl;
-            try {
-                uRl = getJson("https://free.currconv.com/api/v7/convert?q=INR_EUR&compact=ultra&apiKey=your-api-key");
-                JSONObject INRtoObj;
-                INRtoObj = new JSONObject(uRl);
-                resultEUR = INRtoObj.getString("INR_EUR");
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return resultEUR;
-
-
-
-        }
-
-        public String getJson(String url) throws ClientProtocolException, IOException{
-
-            StringBuilder build = new StringBuilder();
-            HttpClient client = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet(url);
-            HttpResponse response = client.execute(httpGet);
-            HttpEntity entity = response.getEntity();
-            InputStream content = entity.getContent();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-            String con;
-            while ((con = reader.readLine()) != null){
-                build.append(con);
-            }
-            return build.toString();
-        }
-    }
-
-    public class calculatePound extends AsyncTask<String, String, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(String strings) {
-            double inrtousd, inrtousdres;
-            inrtousd = Double.parseDouble(resultGBP);
-            inrtousdres = inputvalue * inrtousd;
-            pound.setText(""+ String.format("%.3f", inrtousdres)+ " £");
-
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            String uRl;
-            try {
-                uRl = getJson("https://free.currconv.com/api/v7/convert?q=INR_GBP&compact=ultra&apiKey=your-api-key");
-                JSONObject INRtoObj;
-                INRtoObj = new JSONObject(uRl);
-                resultGBP = INRtoObj.getString("INR_GBP");
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return resultGBP;
-
-
-
-        }
-
-        public String getJson(String url) throws ClientProtocolException, IOException{
-
-            StringBuilder build = new StringBuilder();
-            HttpClient client = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet(url);
-            HttpResponse response = client.execute(httpGet);
-            HttpEntity entity = response.getEntity();
-            InputStream content = entity.getContent();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-            String con;
-            while ((con = reader.readLine()) != null){
-                build.append(con);
-            }
-            return build.toString();
-        }
-    }
 }
