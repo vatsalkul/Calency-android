@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView text = (TextView)findViewById(R.id.linkGitHub);
+        TextView text = (TextView) findViewById(R.id.linkGitHub);
         text.setMovementMethod(LinkMovementMethod.getInstance());
 
         setupUIView();
@@ -192,11 +192,10 @@ public class MainActivity extends AppCompatActivity {
         clr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(display.getText().length()>0){
+                if (display.getText().length() > 0) {
                     CharSequence name = display.getText().toString();
-                    display.setText(name.subSequence(0, name.length()-1));
-                }
-                else {
+                    display.setText(name.subSequence(0, name.length() - 1));
+                } else {
                     val1 = Double.NaN;
                     val2 = Double.NaN;
                     display.setText(null);
@@ -215,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                 euro.setText("...");
                 pound.setText("...");
 
-                if(display.getText().toString().trim().length() > 0){
+                if (display.getText().toString().trim().length() > 0) {
                     String TextValue = display.getText().toString();
                     inputvalue = Double.parseDouble(TextValue);
 
@@ -225,53 +224,53 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setupUIView(){
-        zero = (Button)findViewById(R.id.b0);
-        one = (Button)findViewById(R.id.b1);
-        two = (Button)findViewById(R.id.b2);
-        three = (Button)findViewById(R.id.b3);
-        four = (Button)findViewById(R.id.b4);
-        five = (Button)findViewById(R.id.b5);
-        six = (Button)findViewById(R.id.b6);
-        seven = (Button)findViewById(R.id.b7);
-        eight = (Button)findViewById(R.id.b8);
-        nine = (Button)findViewById(R.id.b9);
-        add = (Button)findViewById(R.id.badd);
-        sub = (Button)findViewById(R.id.bsub);
-        div = (Button)findViewById(R.id.bdiv);
-        mul = (Button)findViewById(R.id.bmul);
-        clr = (Button)findViewById(R.id.bclr);
-        equal = (Button)findViewById(R.id.bequals);
-        display = (TextView)findViewById(R.id.tvDisp);
-        result = (TextView)findViewById(R.id.tvRes);
-        usd = (TextView)findViewById(R.id.tvusd);
-        euro = (TextView)findViewById(R.id.tveur);
-        pound = (TextView)findViewById(R.id.tvpound);
-        convert = (Button)findViewById(R.id.bconvert);
+    private void setupUIView() {
+        zero = (Button) findViewById(R.id.b0);
+        one = (Button) findViewById(R.id.b1);
+        two = (Button) findViewById(R.id.b2);
+        three = (Button) findViewById(R.id.b3);
+        four = (Button) findViewById(R.id.b4);
+        five = (Button) findViewById(R.id.b5);
+        six = (Button) findViewById(R.id.b6);
+        seven = (Button) findViewById(R.id.b7);
+        eight = (Button) findViewById(R.id.b8);
+        nine = (Button) findViewById(R.id.b9);
+        add = (Button) findViewById(R.id.badd);
+        sub = (Button) findViewById(R.id.bsub);
+        div = (Button) findViewById(R.id.bdiv);
+        mul = (Button) findViewById(R.id.bmul);
+        clr = (Button) findViewById(R.id.bclr);
+        equal = (Button) findViewById(R.id.bequals);
+        display = (TextView) findViewById(R.id.tvDisp);
+        result = (TextView) findViewById(R.id.tvRes);
+        usd = (TextView) findViewById(R.id.tvusd);
+        euro = (TextView) findViewById(R.id.tveur);
+        pound = (TextView) findViewById(R.id.tvpound);
+        convert = (Button) findViewById(R.id.bconvert);
 
     }
-    private void compute(){
-        if(!Double.isNaN(val1)){
+
+    private void compute() {
+        if (!Double.isNaN(val1)) {
             val2 = Double.parseDouble(display.getText().toString());
 
-            switch (ACTION){
+            switch (ACTION) {
                 case ADDITION:
-                   val1= val1+val2;
-                   break;
+                    val1 = val1 + val2;
+                    break;
                 case SUBTRACTION:
-                    val1= val1-val2;
+                    val1 = val1 - val2;
                     break;
                 case DIVISION:
-                    val1= val1/val2;
+                    val1 = val1 / val2;
                     break;
                 case MULTIPLICATION:
-                    val1= val1*val2;
+                    val1 = val1 * val2;
                     break;
                 case EQU:
                     break;
             }
-        }
-        else{
+        } else {
             val1 = Double.parseDouble(display.getText().toString());
         }
     }
@@ -291,9 +290,9 @@ public class MainActivity extends AppCompatActivity {
             inrtousdres = inputvalue * inrtousd;
             inrtoeurres = inputvalue * inrtoeur;
             inrtogbpres = inputvalue * inrtogbp;
-            usd.setText(""+ String.format("%.2f", inrtousdres)+" $");
-            euro.setText(""+ String.format("%.2f", inrtoeurres)+ " €");
-            pound.setText(""+ String.format("%.2f", inrtogbpres)+ " £");
+            usd.setText("" + String.format("%.2f", inrtousdres) + " $");
+            euro.setText("" + String.format("%.2f", inrtoeurres) + " €");
+            pound.setText("" + String.format("%.2f", inrtogbpres) + " £");
 
 
         }
@@ -302,17 +301,15 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             String uRl;
             try {
-                for(int i=0; i<3; i++){
+                for (int i = 0; i < 3; i++) {
                     uRl = getJson(myLinks[i]);
                     JSONObject INRtoObj;
                     INRtoObj = new JSONObject(uRl);
-                    if(myLinks[i]==myLinks[0]){
+                    if (myLinks[i] == myLinks[0]) {
                         resultUSD = INRtoObj.getString("INR_USD");
-                    }
-                    else if(myLinks[i]==myLinks[1]){
+                    } else if (myLinks[i] == myLinks[1]) {
                         resultEUR = INRtoObj.getString("INR_EUR");
-                    }
-                    else if(myLinks[i]==myLinks[2]){
+                    } else if (myLinks[i] == myLinks[2]) {
                         resultGBP = INRtoObj.getString("INR_GBP");
                     }
 
@@ -324,11 +321,11 @@ public class MainActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        return null;
+            return null;
 
         }
 
-        public String getJson(String url) throws ClientProtocolException, IOException{
+        public String getJson(String url) throws ClientProtocolException, IOException {
 
             StringBuilder build = new StringBuilder();
             HttpClient client = new DefaultHttpClient();
@@ -338,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
             InputStream content = entity.getContent();
             BufferedReader reader = new BufferedReader(new InputStreamReader(content));
             String con;
-            while ((con = reader.readLine()) != null){
+            while ((con = reader.readLine()) != null) {
                 build.append(con);
             }
             return build.toString();
