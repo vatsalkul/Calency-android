@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private String resultUSD;
     private String resultEUR;
     private String resultGBP;
-    private String[] myLinks = {"https://free.currconv.com/api/v7/convert?q=INR_USD&compact=ultra&apiKey=your-api-key", "https://free.currconv.com/api/v7/convert?q=INR_EUR&compact=ultra&apiKey=your-api-key", "https://free.currconv.com/api/v7/convert?q=INR_GBP&compact=ultra&apiKey=your-api-key"};
+    private String[] myLinks = {"https://free.currconv.com/api/v7/convert?q=INR_USD&compact=ultra&apiKey=f89138db3cade42090a6", "https://free.currconv.com/api/v7/convert?q=INR_EUR&compact=ultra&apiKey=f89138db3cade42090a6", "https://free.currconv.com/api/v7/convert?q=INR_GBP&compact=ultra&apiKey=f89138db3cade42090a6"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -317,9 +317,9 @@ public class MainActivity extends AppCompatActivity {
 
 
             } catch (IOException e) {
-                e.printStackTrace();
+
             } catch (JSONException e) {
-                e.printStackTrace();
+
             }
             return null;
 
