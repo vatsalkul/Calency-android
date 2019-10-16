@@ -1,6 +1,6 @@
 # Calency-android
 
- A calculator with real time currency conversion using api
+ A calculator with real time currency conversion of three currencies namely USD, EUR and GBP using api
 
 ## Screenshot
 
